@@ -1,5 +1,5 @@
 # Analiza podatkov s programom R, 2018/19
-Avtor:Brigita Milanič
+Avtor: Brigita Milanič
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
