@@ -6,10 +6,36 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 * [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/MBrigita/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/MBrigita/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-## Tematika
+## Analiza zdravega načina življenja ljudi v Evropi
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom telesni masni indeks, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol, izobrazbo in starost.  
+Podatki bodo za leto 2014, črpala jih bom iz [Eurostata](https://ec.europa.eu/eurostat/data/database) in [OECD](https://stats.oecd.org/Index.aspx?DataSetCode=HEALTH_LVNG) 
+
+### Tabele:
+* `1.tabela` - bo vsebovala podatke glede na evropske države. Analizirala bom v kateri državi ljudje najbolj zdravo živijo in ali ima razvitost države kakšen vpliv na zdravi način življenja.
+* `2- tabela` - bo imela podatke glede na izobrazbo. Poskušala bom ugotoviti ali ima izobrazba kakšen vpliv na zdravje.
+* `3. tabela` - bo vsebovala podatke glede na starostne skupine. 
+* `4. tabela` - bo imela ločene podatke za ženske in moške, zanimalo me bo kateri spol bolj zdravo živi.
+
+Stolpci bodo v vseh tabelah enaki in sicer bodo vsebovali procente prebivalstva, ki :
+
+* imajo zmanjšano telesno maso
+* normalno telesno maso
+* zvečano telesno maso
+* dnevno kadijo
+* tedensko prekomerno pijančujejo 
+* mesečno prekomerno pijančujejo
+* tedensko ne namenijo nič časa športnim aktivnostim
+* so do 150min telesno aktivni na teden
+* namenijo več kot 150 min na teden športu
+* ne zaužijejo nič sadja in zelenjave na dan
+* pojejo 1-4 obroke sadja ali zelenjave dnevno
+* pojejo več kot 4 obroke sadja ali zelenjave na dan
+* 1.tabela bo vsebovala še stolpec BDP-ja
+
+
+
+
 
 ## Program
 
