@@ -1,17 +1,152 @@
 # 2. faza: Uvoz podatkov
 
-# Uvoz podatkov
-tabela_debelosti <- read_csv("podatki/hlth_ehis_bm1e_1_Data.csv")
-tabela_kajenja <- read_csv("podatki/hlth_ehis_sk3e_1_Data.csv")
-tabela_pijancevanja <- read_csv("podatki/hlth_ehis_al3e_1_Data.csv")
-tabela_aktivnosti <- read.csv("podatki/hlth_ehis_pe2e_1_Data.csv")
-tabela_hrane<- read_csv("podatki/hlth_ehis_fv3e_1_Data.csv")
-tabela_BDP<- read_csv("podatki/a7df3683-554b-4911-9004-10584e4e2439_Data.csv")
+# Uvoz podatkov_za_tabelo_drzav
+tabela_debelosti <- read_csv("podatki/drzave/hlth_ehis_bm1e_1_Data.csv")
+tabela_kajenja <- read_csv("podatki/drzave/hlth_ehis_sk3e_1_Data.csv")
+tabela_pijancevanja <- read_csv("podatki/drzave/hlth_ehis_al3e_1_Data.csv")
+tabela_aktivnosti <- read.csv("podatki/drzave/hlth_ehis_pe2e_1_Data.csv")
+tabela_hrane<- read_csv("podatki/drzave/hlth_ehis_fv3e_1_Data.csv")
+tabela_BDP<- read_csv("podatki/drzave/a7df3683-554b-4911-9004-10584e4e2439_Data.csv")
 
+#uvoz podatkov za tebelo_izobrazbe
+tabela_pijancevanja_si <- read_csv("podatki/izobrazba,spol/alkohol.csv")
+tabela_kajenja_si <-read_csv("podatki/izobrazba,spol/kajenje.csv")
+tabela_aktivnosti_si<- read_csv("podatki/izobrazba,spol/telesna_aktivnost.csv")
+tabela_hrane_si <- read_csv("podatki/izobrazba,spol/hrana.csv")
+tabela_debelosti_si <- read_csv("podatki/izobrazba,spol/debelost.csv")
 
+#precisti podatke za tabelo BDP
+names(tabela_BDP)[5] <- "BDP per capita(US$)"
+names(tabela_BDP)[3] <- "GEO"
+tabela_BDP[1:2] <- NULL
+tabela_BDP[2] <- NULL
+tabela_BDP <- slice(tabela_BDP,1:32)
+tabela_BDP$GEO <- gsub("^Slovak.*", "Slovakia", tabela_BDP$GEO)
+tabela_BDP$GEO <- gsub("^Czech.*", "Czechia", tabela_BDP$GEO)
+
+# funkcija ki cisti nepotrebne stolpce
+brisanje <- function(tabela){
+  tabela$`Flag and Footnotes` <- NULL
+  tabela$TIME <- NULL
+  tabela$UNIT <- NULL
+  tabela$AGE <- NULL
+  tabela$GEO <- gsub("^European.*", "European Union", tabela$GEO)
+  if(i ==1){
+    tabela$SEX <- NULL
+    tabela$ISCED11 <- NULL
+    tabela$GEO <- gsub("^Germany.*", "Germany", tabela$GEO)
+  }
+  else{
+    tabela$GEO <- NULL
+  }
+  return(tabela)
+}
+
+# zanke, ki uredijo tabele
+i = 0
+for(tabela in list(tabela_pijancevanja,tabela_pijancevanja_si)){
+  i = i+1
+  tabela <- split(tabela, tabela[1])
+  names(tabela[[1]])[8] <- "procent ljudi, ki tedensko prekomerno pijancujejo"
+  names(tabela[[2]])[8] <- "procent ljudi, ki vsak mesec prekomerno pijancujejo"
+  tabela[[1]]$FREQUENC <- NULL
+  tabela[[2]]$FREQUENC <- NULL
+  tabela <-tabela <- full_join(tabela[[1]],tabela[[2]], by = NULL, copy=FALSE, suffix =c(".tabela[[1]]",".tabela[[2]]"))
+  if(i == 1){
+    tabela_pijancevanja <- brisanje(tabela)
+  }
+  else{
+    tabela_pijancevanja_si <- brisanje(tabela)
+    i = 0
+  }
+}
+
+for(tabela in list(tabela_kajenja,tabela_kajenja_si)){
+  i = i+1
+  tabela$SMOKING <- NULL
+  names(tabela)[7] <- "procent dnevnih kadilcev"
+  if( i ==1){
+    tabela_kajenja <- brisanje(tabela)
+  }
+  else{
+    tabela_kajenja_si <- brisanje(tabela)
+    i = 0
+  }
+}
+
+tabela_aktivnosti$Flag.and.Footnotes  <- NULL
+
+for(tabela in list(tabela_aktivnosti, tabela_aktivnosti_si)){
+  i = i+1
+  tabela<- split(tabela,tabela$DURATION)
+  names(tabela[[1]])[8] <- "procent ljudi,ki namenijo več kot 150 min na teden športu"
+  names(tabela[[2]])[8] <- " procent ludi, ki so do 150min telesno aktivni na teden"
+  names(tabela[[3]])[8] <- "procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim"
+  tabela[[1]]$DURATION <- NULL
+  tabela[[2]]$DURATION <- NULL
+  tabela[[3]]$DURATION <- NULL
+  pomozna_t1 <-full_join(tabela[[1]],tabela[[2]], by = NULL, copy=FALSE, suffix =c(".tabela[[1]]",".tabela[[2]]"))
+  tabela<- full_join(pomozna_t1, tabela[[3]], by = NULL, copy=FALSE, suffix =c(".pomozna_t1",".tabela[[3]]"))
+  if(i == 1){
+    tabela_aktivnosti <- brisanje(tabela)
+  }
+  else{
+    tabela_aktivnosti_si <- brisanje(tabela)
+    i =0
+  }
+} 
+
+for(tabela in list(tabela_hrane,tabela_hrane_si)){
+  i = i+1
+  tabela<- split(tabela, tabela$N_PORTION)
+  names(tabela[[3]])[8] <- "procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan"
+  names(tabela[[2]])[8] <- "procent ljudi, ki pojejo 5+ sadja in zelenjave na dan"
+  names(tabela[[1]])[8] <- "procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan"
+  tabela[[1]]$N_PORTION <- NULL
+  tabela[[2]]$N_PORTION <- NULL
+  tabela[[3]][1] <- NULL
+  pomozna_t2 <-full_join(tabela[[1]],tabela[[2]], by = NULL, copy=FALSE, suffix =c(".tabela[[1]]",".tabela[[2]]"))
+  tabela <- full_join(pomozna_t2, tabela[[3]], by = NULL, copy=FALSE, suffix =c(".pomozna_t2",".tabela[[3]]"))
+  if(i == 1){
+    tabela_hrane <- brisanje(tabela)
+  }
+  else{
+    tabela_hrane_si <- brisanje(tabela)
+    i = 0
+  }
+}
+
+for(tabela in list(tabela_debelosti,tabela_debelosti_si)){
+  i = i+1
+  tabela$BMI <- NULL
+  names(tabela)[7] <- "procent ljudi s povisano telesno tezo"
+  if(i ==1){
+    tabela_debelosti<- brisanje(tabela)
+  }
+  else{
+    tabela_debelosti_si <- brisanje(tabela)
+    i = 0
+  }
+}
+
+#naredi tabelo glede na drazve
 for(i in list(tabela_debelosti,tabela_hrane, tabela_kajenja,tabela_pijancevanja,tabela_aktivnosti,tabela_BDP)){
   if(colnames(i[2]) == colnames(tabela_debelosti[2])){tabela_drzav= i}
   else{
     tabela_drzav <-full_join(tabela_drzav,i,by = NULL, copy=FALSE, suffix= c(".x", ".y"))
   }
 }
+
+#naredi tabelo glede na izobrazbo in spol
+for(i in list(tabela_debelosti_si,tabela_hrane_si, tabela_kajenja_si,tabela_pijancevanja_si,tabela_aktivnosti_si)){
+  if(colnames(i[3]) == colnames(tabela_debelosti_si[3])){tabela_izobrazbe_spol= i}
+  else{
+    tabela_izobrazbe_spol <-full_join(tabela_izobrazbe_spol,i,by = NULL, copy=FALSE, suffix= c(".x", ".y"))
+  }
+}
+
+
+#izbrisemo nepotrebne elemente
+remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
+       tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
+       tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
