@@ -9,18 +9,14 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 ## Analiza zdravega načina življenja ljudi v Evropi
 
 V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom telesni masni indeks, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol, izobrazbo in starost.  
-Podatki bodo za leto 2014, črpala jih bom iz [Eurostata](https://ec.europa.eu/eurostat/data/database) in [OECD](https://stats.oecd.org/Index.aspx?DataSetCode=HEALTH_LVNG) 
+Podatki bodo za leto 2014, črpala jih bom iz [Eurostata](https://ec.europa.eu/eurostat/data/database)
 
 ### Tabele:
 * `1.tabela` - bo vsebovala podatke glede na evropske države. Analizirala bom v kateri državi ljudje najbolj zdravo živijo in ali ima razvitost države kakšen vpliv na zdravi način življenja.
-* `2- tabela` - bo imela podatke glede na izobrazbo. Poskušala bom ugotoviti ali ima izobrazba kakšen vpliv na zdravje.
-* `3. tabela` - bo vsebovala podatke glede na starostne skupine. 
-* `4. tabela` - bo imela ločene podatke za ženske in moške, zanimalo me bo kateri spol bolj zdravo živi.
+* `2- tabela` - bo imela podatke glede na izobrazbo in spol. Poskušala bom ugotoviti ali ima izobrazba kakšen vpliv na zdravje, ter kateri spol bolj zdravo živi.
 
 Stolpci bodo v vseh tabelah enaki in sicer bodo vsebovali procente prebivalstva, ki :
 
-* imajo zmanjšano telesno maso
-* normalno telesno maso
 * zvečano telesno maso
 * dnevno kadijo
 * tedensko prekomerno pijančujejo 
