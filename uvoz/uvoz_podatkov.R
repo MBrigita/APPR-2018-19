@@ -155,3 +155,8 @@ names(tabela_izobrazbe_spol)[2] <- "spol"
 remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
        tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
        tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
+
+write_csv(tabela_drzav,'podatki',na = "NA", append = FALSE, col_names = !append,
+          quote_escape = "double")
+write_csv(tabela_izobrazbe_spol,'podatki', na = "NA", append = FALSE, col_names = !append,
+          quote_escape = "double")
