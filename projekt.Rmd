@@ -1,5 +1,5 @@
 ---
-title: "Poročilo pri predmetu Analiza podatkov s programom R"
+title: "Analiza zdarvega načina življenja ljudi v Evropi"
 author: "Brigita Milanič"
 output:
   html_document: default
@@ -26,9 +26,8 @@ source("lib/rstudio.r", encoding="UTF-8")
 
 # Izbira teme
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom povišano telesno twžo, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol in izobrazbo.
 
-![](slike/grb.png)
 
 ***
 
@@ -38,26 +37,35 @@ Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Podatke imamo v dveh razpredelnicah v obliki *tidy data*.
+Uvozila sem podatke glede na države, izobrazbo in spol v obliki CSV s Eurostata. Podatke imam v dveh razpredelnicah v obliki *tidy data*.
 
-1. `druzine` - podatki o družinah za vsako občino
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `velikost.druzine` - spremenljivka: število otrok v družini (število: 1, 2, 3 ali 4, kjer zadnja vrednost pomeni 4 ali več),
-  - `stevilo.druzin` - meritev: število družin z ustreznim številom otrok v ustrezni občini (število).
+1.`tabela_drzav` - podatki glede na države
+  - `država` - spremenljivka: ime države(besedilo)
+  - `s povisano telesno tezo` - meritev: procent ljudi s povisano telesno težo (število)
+  - `0 obrokov sadja in zelenjave` - meritev: procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan(število)
+  - `5+ obrokov sadja in zelenjave`- meritev: procent ljudi, ki pojejo 5+ sadja in zelenjave na dan (število)
+  - `1-4 obrokov sadja in zelenjave`- meritev procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan (število)   
+  - `dnevni kadilci`- meritev : procent dnevnih kadilcev (število)
+  - `tedensko prekomerno pijancevanje`- meritev: procent ljudi, ki tedensko prekomerno pijancujejo (število)
+  - `mesecno prekomerno pijancevanje` - meritev: procent ljudi, ki vsak mesec prekomerno pijancujejo (število)
+  - `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
+  - `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
+  - `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
+  - `BDP per capita(US$)`- meritev bruto domačega proizvoda na prebivalca (število)
 
-2. `obcine` - podatki o občinah
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `povrsina` - meritev: površina občine v km$^2$ (število),
-  - `prebivalci` - meritev: prebivalstvo občine (število),
-  - `gostota` - meritev: število prebivalcev na km$^2$ (število),
-  - `naselja` - meritev: število naselij v občini (število),
-  - `ustanovitev` - meritev: leto ustanovitve občine (število),
-  - `pokrajina` - meritev: pokrajina, ki ji občina pripada (neurejen faktor),
-  - `regija` - meritev: regija, ki ji občina pripada (neurejen faktor),
-  - `odcepitev` - meritev: podatki o občinah, od katerih se je občina odcepila (besedilo).
+`2.tabela_izobrazbe_spol`- podatki glede na izobrazbo in spol
+  - `država` - spremenljivka: ime države(besedilo)
+  - `s povisano telesno tezo` - meritev: procent ljudi s povisano telesno težo (število)
+  - `0 obrokov sadja in zelenjave` - meritev: procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan(število)
+  - `5+ obrokov sadja in zelenjave`- meritev: procent ljudi, ki pojejo 5+ sadja in zelenjave na dan (število)
+  - `1-4 obrokov sadja in zelenjave`- meritev procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan (število)   
+  - `dnevni kadilci`- meritev : procent dnevnih kadilcev (število)
+  - `tedensko prekomerno pijancevanje`- meritev: procent ljudi, ki tedensko prekomerno pijancujejo (število)
+  - `mesecno prekomerno pijancevanje` - meritev: procent ljudi, ki vsak mesec prekomerno pijancujejo (število)
+  - `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
+  - `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
+  - `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
 
-**Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
 
 Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 

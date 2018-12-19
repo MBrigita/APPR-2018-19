@@ -1,19 +1,19 @@
 # 2. faza: Uvoz podatkov
 
 # Uvoz podatkov_za_tabelo_drzav
-tabela_debelosti <- read_csv("podatki/drzave/hlth_ehis_bm1e_1_Data.csv")
-tabela_kajenja <- read_csv("podatki/drzave/hlth_ehis_sk3e_1_Data.csv")
-tabela_pijancevanja <- read_csv("podatki/drzave/hlth_ehis_al3e_1_Data.csv")
-tabela_aktivnosti <- read.csv("podatki/drzave/hlth_ehis_pe2e_1_Data.csv")
-tabela_hrane<- read_csv("podatki/drzave/hlth_ehis_fv3e_1_Data.csv")
-tabela_BDP<- read_csv("podatki/drzave/a7df3683-554b-4911-9004-10584e4e2439_Data.csv")
+tabela_debelosti <- read_csv("podatki/drzave/hlth_ehis_bm1e_1_Data.csv",locale=locale(encoding="Windows-1252"))
+tabela_kajenja <- read_csv("podatki/drzave/hlth_ehis_sk3e_1_Data.csv", locale=locale(encoding="Windows-1252"))
+tabela_pijancevanja <- read_csv("podatki/drzave/hlth_ehis_al3e_1_Data.csv",locale=locale(encoding="Windows-1252"))
+tabela_aktivnosti <- read_csv("podatki/drzave/hlth_ehis_pe2e_1_Data.csv",locale=locale(encoding="Windows-1252"))
+tabela_hrane<- read_csv("podatki/drzave/hlth_ehis_fv3e_1_Data.csv", locale=locale(encoding="Windows-1252"))
+tabela_BDP<- read_csv("podatki/drzave/a7df3683-554b-4911-9004-10584e4e2439_Data.csv",locale=locale(encoding="Windows-1252"))
 
 #uvoz podatkov za tebelo_izobrazbe
-tabela_pijancevanja_si <- read_csv("podatki/izobrazba,spol/alkohol.csv")
-tabela_kajenja_si <-read_csv("podatki/izobrazba,spol/kajenje.csv")
-tabela_aktivnosti_si<- read_csv("podatki/izobrazba,spol/telesna_aktivnost.csv")
-tabela_hrane_si <- read_csv("podatki/izobrazba,spol/hrana.csv")
-tabela_debelosti_si <- read_csv("podatki/izobrazba,spol/debelost.csv")
+tabela_pijancevanja_si <- read_csv("podatki/izobrazba,spol/alkohol.csv",locale=locale(encoding="Windows-1252"))
+tabela_kajenja_si <-read_csv("podatki/izobrazba,spol/kajenje.csv",locale=locale(encoding="Windows-1252"))
+tabela_aktivnosti_si<- read_csv("podatki/izobrazba,spol/telesna_aktivnost.csv", locale=locale(encoding="Windows-1252"))
+tabela_hrane_si <- read_csv("podatki/izobrazba,spol/hrana.csv",locale=locale(encoding="Windows-1252"))
+tabela_debelosti_si <- read_csv("podatki/izobrazba,spol/debelost.csv",locale=locale(encoding="Windows-1252"))
 
 #precisti podatke za tabelo BDP
 names(tabela_BDP)[5] <- "BDP per capita(US$)"
@@ -38,6 +38,8 @@ brisanje <- function(tabela){
   }
   else{
     tabela$GEO <- NULL
+    tabela$SEX <- sub("Males", "moski",tabela$SEX)
+    tabela$SEX <- sub("Females", "zenske",tabela$SEX)
   }
   return(tabela)
 }
@@ -47,8 +49,8 @@ i = 0
 for(tabela in list(tabela_pijancevanja,tabela_pijancevanja_si)){
   i = i+1
   tabela <- split(tabela, tabela[1])
-  names(tabela[[1]])[8] <- "procent ljudi, ki tedensko prekomerno pijancujejo"
-  names(tabela[[2]])[8] <- "procent ljudi, ki vsak mesec prekomerno pijancujejo"
+  names(tabela[[1]])[8] <- "tedensko prekomerno pijancevanje"
+  names(tabela[[2]])[8] <- "mesecno prekomerno pijancevanje"
   tabela[[1]]$FREQUENC <- NULL
   tabela[[2]]$FREQUENC <- NULL
   tabela <-tabela <- full_join(tabela[[1]],tabela[[2]], by = NULL, copy=FALSE, suffix =c(".tabela[[1]]",".tabela[[2]]"))
@@ -64,7 +66,7 @@ for(tabela in list(tabela_pijancevanja,tabela_pijancevanja_si)){
 for(tabela in list(tabela_kajenja,tabela_kajenja_si)){
   i = i+1
   tabela$SMOKING <- NULL
-  names(tabela)[7] <- "procent dnevnih kadilcev"
+  names(tabela)[7] <- "dnevni kadilci"
   if( i ==1){
     tabela_kajenja <- brisanje(tabela)
   }
@@ -79,9 +81,9 @@ tabela_aktivnosti$Flag.and.Footnotes  <- NULL
 for(tabela in list(tabela_aktivnosti, tabela_aktivnosti_si)){
   i = i+1
   tabela<- split(tabela,tabela$DURATION)
-  names(tabela[[1]])[8] <- "procent ljudi,ki namenijo več kot 150 min na teden športu"
-  names(tabela[[2]])[8] <- " procent ludi, ki so do 150min telesno aktivni na teden"
-  names(tabela[[3]])[8] <- "procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim"
+  names(tabela[[1]])[8] <- "vec kot 150 min telesno aktivni"
+  names(tabela[[2]])[8] <- "do 150min telesno aktivni"
+  names(tabela[[3]])[8] <- "niso telesno aktivni"
   tabela[[1]]$DURATION <- NULL
   tabela[[2]]$DURATION <- NULL
   tabela[[3]]$DURATION <- NULL
@@ -99,9 +101,9 @@ for(tabela in list(tabela_aktivnosti, tabela_aktivnosti_si)){
 for(tabela in list(tabela_hrane,tabela_hrane_si)){
   i = i+1
   tabela<- split(tabela, tabela$N_PORTION)
-  names(tabela[[3]])[8] <- "procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan"
-  names(tabela[[2]])[8] <- "procent ljudi, ki pojejo 5+ sadja in zelenjave na dan"
-  names(tabela[[1]])[8] <- "procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan"
+  names(tabela[[3]])[8] <- " 1-4 obrokov sadja in zelenjave"
+  names(tabela[[2]])[8] <- "5+ obrkov sadja in zelenjave"
+  names(tabela[[1]])[8] <- "0 obrokov sadja in zelenjave"
   tabela[[1]]$N_PORTION <- NULL
   tabela[[2]]$N_PORTION <- NULL
   tabela[[3]][1] <- NULL
@@ -119,7 +121,7 @@ for(tabela in list(tabela_hrane,tabela_hrane_si)){
 for(tabela in list(tabela_debelosti,tabela_debelosti_si)){
   i = i+1
   tabela$BMI <- NULL
-  names(tabela)[7] <- "procent ljudi s povisano telesno tezo"
+  names(tabela)[7] <- "s povisano telesno tezo"
   if(i ==1){
     tabela_debelosti<- brisanje(tabela)
   }
@@ -144,6 +146,9 @@ for(i in list(tabela_debelosti_si,tabela_hrane_si, tabela_kajenja_si,tabela_pija
     tabela_izobrazbe_spol <-full_join(tabela_izobrazbe_spol,i,by = NULL, copy=FALSE, suffix= c(".x", ".y"))
   }
 }
+names(tabela_drzav)[1] <- "drzave"
+names(tabela_izobrazbe_spol)[1] <- "izobrazba"
+names(tabela_izobrazbe_spol)[2] <- "spol"
 
 
 #izbrisemo nepotrebne elemente
