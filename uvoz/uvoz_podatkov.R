@@ -49,8 +49,8 @@ i = 0
 for(tabela in list(tabela_pijancevanja,tabela_pijancevanja_si)){
   i = i+1
   tabela <- split(tabela, tabela[1])
-  names(tabela[[1]])[8] <- "tedensko prekomerno pijancevanje"
-  names(tabela[[2]])[8] <- "mesecno prekomerno pijancevanje"
+  names(tabela[[1]])[8] <- "tedensko_prekomerno_pijancevanje"
+  names(tabela[[2]])[8] <- "mesecno_prekomerno_pijancevanje"
   tabela[[1]]$FREQUENC <- NULL
   tabela[[2]]$FREQUENC <- NULL
   tabela <-tabela <- full_join(tabela[[1]],tabela[[2]], by = NULL, copy=FALSE, suffix =c(".tabela[[1]]",".tabela[[2]]"))
@@ -66,7 +66,7 @@ for(tabela in list(tabela_pijancevanja,tabela_pijancevanja_si)){
 for(tabela in list(tabela_kajenja,tabela_kajenja_si)){
   i = i+1
   tabela$SMOKING <- NULL
-  names(tabela)[7] <- "dnevni kadilci"
+  names(tabela)[7] <- "dnevni_kadilci"
   if( i ==1){
     tabela_kajenja <- brisanje(tabela)
   }
@@ -81,9 +81,9 @@ tabela_aktivnosti$Flag.and.Footnotes  <- NULL
 for(tabela in list(tabela_aktivnosti, tabela_aktivnosti_si)){
   i = i+1
   tabela<- split(tabela,tabela$DURATION)
-  names(tabela[[1]])[8] <- "vec kot 150 min telesno aktivni"
-  names(tabela[[2]])[8] <- "do 150min telesno aktivni"
-  names(tabela[[3]])[8] <- "niso telesno aktivni"
+  names(tabela[[1]])[8] <- "vec_kot_150_min_telesno_aktivni"
+  names(tabela[[2]])[8] <- "do 150min_telesno_aktivni"
+  names(tabela[[3]])[8] <- "niso_telesno_aktivni"
   tabela[[1]]$DURATION <- NULL
   tabela[[2]]$DURATION <- NULL
   tabela[[3]]$DURATION <- NULL
@@ -101,9 +101,9 @@ for(tabela in list(tabela_aktivnosti, tabela_aktivnosti_si)){
 for(tabela in list(tabela_hrane,tabela_hrane_si)){
   i = i+1
   tabela<- split(tabela, tabela$N_PORTION)
-  names(tabela[[3]])[8] <- " 1-4 obrokov sadja in zelenjave"
-  names(tabela[[2]])[8] <- "5+ obrkov sadja in zelenjave"
-  names(tabela[[1]])[8] <- "0 obrokov sadja in zelenjave"
+  names(tabela[[3]])[8] <- " ena-stiri_obrokov_sadja_in_zelenjave"
+  names(tabela[[2]])[8] <- "pet+_obrkov_sadja_in_zelenjave"
+  names(tabela[[1]])[8] <- "nic_obrokov_sadja_in_zelenjave"
   tabela[[1]]$N_PORTION <- NULL
   tabela[[2]]$N_PORTION <- NULL
   tabela[[3]][1] <- NULL
@@ -121,7 +121,7 @@ for(tabela in list(tabela_hrane,tabela_hrane_si)){
 for(tabela in list(tabela_debelosti,tabela_debelosti_si)){
   i = i+1
   tabela$BMI <- NULL
-  names(tabela)[7] <- "s povisano telesno tezo"
+  names(tabela)[7] <- "s_povisano_telesno_tezo"
   if(i ==1){
     tabela_debelosti<- brisanje(tabela)
   }
