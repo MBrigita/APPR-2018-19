@@ -32,14 +32,23 @@ graf<- ggplot(data= tabela_drzav,aes(x=drzave, y = seq(from = 0, to = 100, by = 
 print(graf)
 
 najvisji.BDP <- c("Luxembourg"," Norway", "Denmark", "Sweden","Ireland")
-graf_najvisjih <- ggplot(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP),aes(x=najvisji.BDP, y = seq(from = 0, to = 100, by = 10))) + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP),aes(x=drzave %in% najvisji.BDP,y= dnevni_kadilci),color="red") + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave %in% najvisji.BDP, y= s_povisano_telesno_tezo),color="green")+
-  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave %in% najvisji.BDP, y= mesecno_prekomerno_pijancevanje),color="blue") +
-  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave %in% najvisji.BDP, y= niso_telesno_aktivni),color="orange") + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave %in% najvisji.BDP, y= nic_obrokov_sadja_in_zelenjave),color="purple") 
+najnizji.BDP <- c("Bulgaria","Romania","Turkey","Croatia")
+graf_najvisjih <- ggplot(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP),aes(x=drzave, y = seq(from = 0, to = 100, by = 10))) + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP),aes(x=drzave,y= dnevni_kadilci),color="red") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave, y= s_povisano_telesno_tezo),color="green")+
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave, y= mesecno_prekomerno_pijancevanje),color="blue") +
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave, y= niso_telesno_aktivni),color="orange") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najvisji.BDP), aes(x =drzave, y= nic_obrokov_sadja_in_zelenjave),color="purple") 
+
+graf_najnizji<- ggplot(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP),aes(x=drzave, y = seq(from = 0, to = 100, by = 10))) + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP),aes(x=drzave,y= dnevni_kadilci),color="red") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP), aes(x =drzave, y= s_povisano_telesno_tezo),color="green")+
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP), aes(x =drzave, y= mesecno_prekomerno_pijancevanje),color="blue") +
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP), aes(x =drzave, y= niso_telesno_aktivni),color="orange") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% najnizji.BDP), aes(x =drzave, y= nic_obrokov_sadja_in_zelenjave),color="purple") 
 
 print(graf_najvisjih)
+print(graf_najnizji)
 #graf_kadilcev <- ggplot(tabela_drzav %>% filter(dnevni_kadilci > 20), aes(x=drzave, y=dnevni_kadilci,color= drzave)) + geom_point() + theme_bw()
 #print(graf_kadilcev)
 
