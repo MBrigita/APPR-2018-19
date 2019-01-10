@@ -16,7 +16,7 @@ tabela_hrane_si <- read_csv("podatki/izobrazba,spol/hrana.csv",locale=locale(enc
 tabela_debelosti_si <- read_csv("podatki/izobrazba,spol/debelost.csv",locale=locale(encoding="Windows-1252"))
 
 #precisti podatke za tabelo BDP
-names(tabela_BDP)[5] <- "BDP per capita(US$)"
+names(tabela_BDP)[5] <- "BDP_per_capita(US$)"
 names(tabela_BDP)[3] <- "GEO"
 tabela_BDP[1:2] <- NULL
 tabela_BDP[2] <- NULL
@@ -132,7 +132,7 @@ for(tabela in list(tabela_debelosti,tabela_debelosti_si)){
 }
 
 #naredi tabelo glede na drazve
-for(i in list(tabela_debelosti,tabela_hrane, tabela_kajenja,tabela_pijancevanja,tabela_aktivnosti,tabela_BDP)){
+for(i in list(tabela_debelosti,tabela_BDP, tabela_kajenja,tabela_pijancevanja,tabela_aktivnosti,tabela_hrane)){
   if(colnames(i[2]) == colnames(tabela_debelosti[2])){tabela_drzav= i}
   else{
     tabela_drzav <-full_join(tabela_drzav,i,by = NULL, copy=FALSE, suffix= c(".x", ".y"))
@@ -140,7 +140,7 @@ for(i in list(tabela_debelosti,tabela_hrane, tabela_kajenja,tabela_pijancevanja,
 }
 
 #naredi tabelo glede na izobrazbo in spol
-for(i in list(tabela_debelosti_si,tabela_hrane_si, tabela_kajenja_si,tabela_pijancevanja_si,tabela_aktivnosti_si)){
+for(i in list(tabela_debelosti_si, tabela_kajenja_si,tabela_pijancevanja_si,tabela_aktivnosti_si,tabela_hrane_si)){
   if(colnames(i[3]) == colnames(tabela_debelosti_si[3])){tabela_izobrazbe_spol= i}
   else{
     tabela_izobrazbe_spol <-full_join(tabela_izobrazbe_spol,i,by = NULL, copy=FALSE, suffix= c(".x", ".y"))
