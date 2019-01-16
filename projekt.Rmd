@@ -7,7 +7,7 @@ output:
     includes:
       in_header: lib/styles.sty
     latex_engine: xelatex
-runtime: shiny
+
 ---
 
 ```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
@@ -67,52 +67,52 @@ Uvozila sem podatke glede na države, izobrazbo in spol v obliki CSV s Eurostata
   - `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
 
 
-Spodnji graf prikazuje porazdelitev števila naselij v občinah.
-
-```{r histogram, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x=naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
-```
 
 ***
 
 # Analiza in vizualizacija podatkov
-
 ```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+
 ```
 
-Spodnji zemljevid prikazuje povprečno velikost družine za vsako občino.
+Graf 6 držav- 3 z najvišjim BDP(Luxemburg,Norveška in Danska) in 3 z najnižjim (Bolgarija, Romanija, Turčija)
+legenda mi še ne dela,a vsaka točka ima svoj pomen in sicer:
+- `rdeča` - prikazuje procent dnevnih kadilcev
+- `zelena` - ljudi s povišano telesno težo
+- `oranžna` - procent ljudi ki nič časa ne namenijo telesnim aktivnostim
+- `vijolična` - ljudje ki ne zaužijejo nič obrkov sadja in zelenjave
+- `modra` - procent ludi ki mesečno prekomerno pijančuje
 
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-ggplot() + geom_polygon(data=left_join(zemljevid, povprecja, by=c("OB_UIME"="obcina")),
-                        aes(x=long, y=lat, group=group, fill=povprecje)) +
-  ggtitle("Povprečno število otrok v družini") + xlab("") + ylab("") +
-  guides(fill=guide_colorbar(title="Povprečje"))
+```{r graf_drzav_BDP, echo=FALSE, message=FALSE, warning=FALSE}
+graf_drzav_BDP
 ```
 
-***
-
-# Napredna analiza podatkov
-
-```{r analiza, echo=FALSE, message=FALSE}
-source("analiza/analiza.r", encoding="UTF-8")
+Naslednji grafi prikazujejo kako izobrazba in spol vplivata na različne dejavnike.
+Delež ljudi z najvišjo izobrazbo je izrazito manjši od ostalih.
+```{r g_kajenja, echo=FALSE, message=FALSE, warning=FALSE}
+g_kajenja
+```
+Vidimo,da za ženske povišana telesna teža z izobrazbo pada, medtem ko pa za moške ne reavno drži.
+```{r g_debelosti, echo=FALSE, message=FALSE, warning=FALSE}
+g_debelosti
 ```
 
-Spodnji graf prikazuje povezavo med številom naselij in površino občine.
-
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina=names(skupine),
-                                     skupina=factor(skupine)), by="obcina")
-, aes(x=povrsina, y=naselja, color=skupina, size=prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-  guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
+V grafu je vidno, da bolj kot so ljudje izobraženi, več časa namenijo športnim aktivnostim.
+```{r g_niso_aktivni, echo=FALSE, message=FALSE, warning=FALSE}
+g_niso_aktivni
 ```
 
-***
+```{r g_nic_sz, echo=FALSE, message=FALSE, warning=FALSE}
+g_nic_sz
+```
 
-```{r shiny, echo=FALSE}
-shinyAppDir("shiny", options=list(width="100%", height=600))
+V spodnejm grafu sem ugotovila, da pijančevanje je značilnejše za ljudi z višjo izobrazbo, na kar lahko vpliva tudi stres iz služb.
+```{r g_pijancevanje, echo=FALSE, message=FALSE, warning=FALSE}
+g_pijancevanje
+```
+
+Kasneje bom še zemljevid Evrope uredila glede na moje podatke, trenutno je pa samo obarvan glede na države.
+```{r Evropa, echo=FALSE, message=FALSE, warning=FALSE}
+print(Evropa)
 ```
