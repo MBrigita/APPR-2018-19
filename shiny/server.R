@@ -1,24 +1,38 @@
 library(shiny)
 
 shinyServer(function(input, output) {
-  output$druzine <- DT::renderDataTable({
-    dcast(druzine, obcina ~ velikost.druzine, value.var="stevilo.druzin") %>%
-      rename(`Občina`=obcina)
+  output$box <- renderPlot({
+  if(input$type == "Dnevni kadilci"){
+    print(zemljevid_dk)}
+  else if (input$type == "število ljudi s povišano telesno težo"){
+    print(zemljevid_ptt)}
+  else if (input$type == "delež ljudi, ki niso telesno aktivni"){
+    print(zemljevid_ta)}
+  else if (input$type == "procent prebivalstva, ki ne je sadja in zelenjave"){
+    print(zemljevid_nsz)}
+  else if (input$type == "delež ljudi, ki mesečno prekomerno pijančuje"){
+    print(zemljevid_pp)}
+  else if(input$type == "graf za izbrane države"){
+    print(graf_drzav_BDP)}
+  })
+
+  output$graf_sprem <- renderPlot({
+    if(input$spol == "Dnevni kadilci"){
+      print(g_kajenja)}
+    else if (input$spol == "število ljudi s povišano telesno težo"){
+      print(g_debelosti)}
+    else if (input$spol == "delež ljudi, ki niso telesno aktivni"){
+      print(g_niso_aktivni)}
+    else if (input$spol == "procent prebivalstva, ki ne je sadja in zelenjave"){
+      print(g_nic_sz)}
+    else if (input$spol == "delež ljudi, ki mesečno prekomerno pijančuje"){
+      print(g_pijancevanje)}
+    
+    else if(input$spol == "graf za izbrane države"){
+      print(graf_drzav_BDP)}
   })
   
-  output$pokrajine <- renderUI(
-    selectInput("pokrajina", label="Izberi pokrajino",
-                choices=c("Vse", levels(obcine$pokrajina)))
-  )
-  output$naselja <- renderPlot({
-    main <- "Pogostost števila naselij"
-    if (!is.null(input$pokrajina) && input$pokrajina %in% levels(obcine$pokrajina)) {
-      t <- obcine %>% filter(pokrajina == input$pokrajina)
-      main <- paste(main, "v regiji", input$pokrajina)
-    } else {
-      t <- obcine
-    }
-    ggplot(t, aes(x=naselja)) + geom_histogram() +
-      ggtitle(main) + xlab("Število naselij") + ylab("Število občin")
-  })
-})
+
+
+}
+)

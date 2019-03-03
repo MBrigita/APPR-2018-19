@@ -93,8 +93,8 @@ g_niso_aktivni<- g_niso_aktivni +geom_bar(stat="identity", position=position_dod
                             "primarna",
                             "sekundarna", 
                             "terciarna")) +
-  theme_minimal() +  coord_flip()
-print(g_niso_aktivni)
+  theme_minimal()
+
 
 #graf, ki prikazuje kako izobrazba in spol vplivata na uživanje sadja in zelenjave
 g_nic_sz <- ggplot(data=tabela_izobrazbe_spol, aes(x=izobrazba, y=nic_obrokov_sadja_in_zelenjave, fill=spol))
@@ -109,7 +109,7 @@ g_nic_sz<- g_nic_sz + geom_bar(stat="identity", position=position_dodge())+
                             "terciarna")) +
   theme_minimal()
 #print(g_nic_sz)
-#graf, ki prikazuje kao izobbrazba in spol vplivata na mesečno pijančevanje
+#graf, ki prikazuje kako izobrazba in spol vplivata na mesečno pijančevanje
 g_pijancevanje <- ggplot(data=tabela_izobrazbe_spol, aes(x=izobrazba, y=mesecno_prekomerno_pijancevanje, fill=spol))
 
 g_pijancevanje<- g_pijancevanje + geom_bar(stat="identity", position=position_dodge())+
@@ -122,4 +122,34 @@ g_pijancevanje<- g_pijancevanje + geom_bar(stat="identity", position=position_do
                             "terciarna"))+
   theme_minimal() 
 #print(g_pijancevanje)
+ #spodaj so že zemljevidi glede na države za posamezno kategorijo
 
+#zemljevid dnevnih kadilcev
+zemljevid_dk <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
+                                 aes(x=long, y=lat, group=group, fill=dnevni_kadilci)) +
+  ggtitle("zemlejvid dnevnih kadilcev") +  scale_fill_continuous(
+    low= "yellow", high="red", name = "procent dnevnih kadilcev")
+
+#zemljevid ljudi s povišano telesno težo
+zemljevid_ptt <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
+                                         aes(x=long, y=lat, group=group, fill=s_povisano_telesno_tezo)) +
+  ggtitle("zemljevid ljudi s povišano telesno težo") +  scale_fill_continuous(
+    low= "Green", high="black", name = "procent ljudi")
+
+
+#zemlejvid ljudi ki niso telesne aktivnosti
+zemljevid_ta <-ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
+                                       aes(x=long, y=lat, group=group, fill=niso_telesno_aktivni)) +
+  ggtitle("zemlejvid deleža prebivalstva, ki niso telesno aktivni") + scale_fill_continuous(
+    low= "white", high="orange", name = "procent ljudi")
+
+#zemljevid ljudi ki ne zaužjejo nič sadja in zelenjave
+zemljevid_nsz <-ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
+                                       aes(x=long, y=lat, group=group, fill=nic_obrokov_sadja_in_zelenjave)) +
+  ggtitle("zemlejvid deleža prebivalstva, ki ne je sadja in zelenjave") + scale_fill_continuous(
+    low= "pink", high="purple", name = "procent ljudi")
+
+#zemljevid ki prikazuje mesečno prekomerno pijančevanje
+zemljevid_pp <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
+                                        aes(x=long, y=lat, group=group, fill=mesecno_prekomerno_pijancevanje)) +
+  ggtitle("zemlejvid prekomernega mesečnega pijančevanja")
