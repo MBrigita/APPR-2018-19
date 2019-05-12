@@ -26,5 +26,13 @@ fluidPage(
                                      "delež ljudi, ki mesečno prekomerno pijančuje","graf za izbrane države"))),
            mainPanel(plotOutput("graf_sprem"))),
   
+  tabPanel("Graf drzave",
+           sidebarPanel(
+             selectInput("tabela", label= "Izberi kategorijo",
+                         choices = c("Dnevni kadilci", "število ljudi s povišano telesno težo", "delež ljudi, ki niso telesno aktivni",
+                                     "procent prebivalstva, ki ne je sadja in zelenjave", 
+                                     "BDP drzav"))),
+           mainPanel(plotOutput("graf_drzave")))
+  
 
 )

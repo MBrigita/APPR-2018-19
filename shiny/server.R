@@ -32,7 +32,37 @@ shinyServer(function(input, output) {
       print(graf_drzav_BDP)}
   })
   
+  # output$graf_drzav <- renderPlot({
+  #   graf_bdp <- ggplot(data =tabela_drzav %>% filter(drzave %in% drzave_BDP),aes(x=drzave, y=seq(from = 0, to = 100, by = 20),fill= input$kategorija)) + geom_col()
+  #   print(graf_bdp)})
+  
+  output$graf_drzave <- renderPlot({
+    if(input$tabela == "Dnevni kadilci"){
+      graf_drzave <- ggplot(data =tabela_kajenja %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=dnevni_kadilci)) + geom_col() + 
+        geom_bar(stat="identity", fill="red", colour="black")
+      print(graf_drzave)}
+    else if (input$tabela == "število ljudi s povišano telesno težo"){
+      graf_drzave <- ggplot(data =tabela_debelosti %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=s_povisano_telesno_tezo)) + 
+        geom_col() + geom_bar(stat="identity", fill="green", colour="black")
+      print(graf_drzave)}
+    else if (input$tabela == "delež ljudi, ki niso telesno aktivni"){
+      graf_drzave <- ggplot(data =tabela_aktivnosti %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=niso_telesno_aktivni)) +
+        geom_col() + geom_bar(stat="identity", fill="orange", colour="black")
+      print(graf_drzave)}
+    else if (input$tabela == "procent prebivalstva, ki ne je sadja in zelenjave"){
+      graf_drzave <- ggplot(data =tabela_hrane %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=nic_obrokov_sadja_in_zelenjave)) + 
+        geom_col() + geom_bar(stat="identity", fill="purple", colour="black")
+      print(graf_drzave)}
+    else if (input$tabela == "delež ljudi, ki mesečno prekomerno pijančuje"){
+      graf_drzave <- ggplot(data =tabela_pijancevanja %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=mesecno_prekomerno_pijancevanje)) +
+        geom_col() + geom_bar(stat="identity", fill="blue", colour="black")
+      print(graf_drzave)}
+    
+     else if(input$tabela == "BDP drzav"){
+     graf_drzave <- ggplot(data =tabela_BDP %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=BDP_per_capita)) +
+       geom_col() + geom_bar(stat="identity", fill="pink", colour="black")
+     print(graf_drzave)}
+     
 
-
-}
-)
+})
+})
