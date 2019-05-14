@@ -62,6 +62,17 @@ shinyServer(function(input, output) {
      graf_drzave <- ggplot(data =tabela_BDP %>% filter(GEO %in% drzave_BDP),aes(x=GEO, y=BDP_per_capita)) +
        geom_col() + geom_bar(stat="identity", fill="pink", colour="black")
      print(graf_drzave)}
+    
+    output$gizbrana_drzava <- renderPlot({
+      gizbrana_drzava <- ggplot(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava),aes(x=kategorije, y = seq(from = 0, to = 100, by = 10))) + 
+        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="s_povisano_telesno_tezo", y= s_povisano_telesno_tezo),color="green", show.legend = TRUE)+
+        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="dnevni_kadilci", y= dnevni_kadilci),color="red", show.legend = TRUE) +
+        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="mesecno_prekomerno_pijancevanje", y= mesecno_prekomerno_pijancevanje),color="blue",show.legend = TRUE) +
+        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="niso_telesno_aktivni", y= niso_telesno_aktivni),color="orange",show.legend = TRUE) + 
+        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="nic_obrokov_sadja_in_zelenjave", y= nic_obrokov_sadja_in_zelenjave),color="purple",show.legend = TRUE)
+      
+      print(gizbrana_drzava)
+    })
      
 
 })

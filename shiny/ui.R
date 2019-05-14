@@ -32,7 +32,16 @@ fluidPage(
                          choices = c("Dnevni kadilci", "število ljudi s povišano telesno težo", "delež ljudi, ki niso telesno aktivni",
                                      "procent prebivalstva, ki ne je sadja in zelenjave", 
                                      "BDP drzav"))),
-           mainPanel(plotOutput("graf_drzave")))
+           mainPanel(plotOutput("graf_drzave"))),
+  
+  tabPanel("Graf izbranie drzave",
+           sidebarPanel(
+             selectInput("izbrana_drzava",label = "Izberi drzavo",
+                         choices=  sort(unique(tabela_drzav$drzave))),
+            tableOutput("table1")),
+           mainPanel(plotOutput("gizbrana_drzava")))
+           
+             
   
 
 )

@@ -16,7 +16,7 @@ tabela_hrane_si <- read_csv("podatki/izobrazba,spol/hrana.csv",locale=locale(enc
 tabela_debelosti_si <- read_csv("podatki/izobrazba,spol/debelost.csv",locale=locale(encoding="Windows-1252"))
 
 #precisti podatke za tabelo BDP
-names(tabela_BDP)[5] <- "BDP_per_capita(US$)"
+names(tabela_BDP)[5] <- "BDP_per_capita"
 names(tabela_BDP)[3] <- "GEO"
 tabela_BDP[1:2] <- NULL
 tabela_BDP[2] <- NULL
@@ -156,6 +156,6 @@ tabela_izobrazbe_spol$izobrazba[7:9] <- c("sekundarna","sekundarna","sekundarna"
 tabela_izobrazbe_spol$izobrazba[10:12] <- c("terciarna","terciarna","terciarna")
 
 #izbrisemo nepotrebne elemente
-remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
-       tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
-       tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
+# remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
+#        tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
+#        tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
