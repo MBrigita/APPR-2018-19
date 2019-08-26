@@ -25,9 +25,11 @@ source("lib/libraries.r", encoding="UTF-8")
 source("lib/rstudio.r", encoding="UTF-8")
 ```
 
+![](slike/Rstudio.png)
+
 # Izbira teme
 
-V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom povišano telesno twžo, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol in izobrazbo.
+V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom povišano telesno težo, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol in izobrazbo.
 
 
 ***
@@ -39,35 +41,33 @@ source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 Uvozila sem podatke glede na države, izobrazbo in spol v obliki CSV s Eurostata. Podatke imam v dveh razpredelnicah v obliki *tidy data*.
+V prvi tabeli so predstavljeni podatki glede na države v drugi tabeli pa glede na izobrazbo in spol. Obe tabeli imata enake stolpce in sicer:
 
-1.`tabela_drzav` - podatki glede na države
-  - `država` - spremenljivka: ime države(besedilo)
-  - `s povisano telesno tezo` - meritev: procent ljudi s povisano telesno težo (število)
-  - `0 obrokov sadja in zelenjave` - meritev: procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan(število)
-  - `5+ obrokov sadja in zelenjave`- meritev: procent ljudi, ki pojejo 5+ sadja in zelenjave na dan (število)
-  - `1-4 obrokov sadja in zelenjave`- meritev procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan (število)   
-  - `dnevni kadilci`- meritev : procent dnevnih kadilcev (število)
-  - `tedensko prekomerno pijancevanje`- meritev: procent ljudi, ki tedensko prekomerno pijancujejo (število)
-  - `mesecno prekomerno pijancevanje` - meritev: procent ljudi, ki vsak mesec prekomerno pijancujejo (število)
-  - `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
-  - `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
-  - `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
-  - `BDP per capita(US$)`- meritev bruto domačega proizvoda na prebivalca (število)
+**tabela** - podatki v tabelah so
 
-`2.tabela_izobrazbe_spol`- podatki glede na izobrazbo in spol
-  - `država` - spremenljivka: ime države(besedilo)
-  - `s povisano telesno tezo` - meritev: procent ljudi s povisano telesno težo (število)
-  - `0 obrokov sadja in zelenjave` - meritev: procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan(število)
-  - `5+ obrokov sadja in zelenjave`- meritev: procent ljudi, ki pojejo 5+ sadja in zelenjave na dan (število)
-  - `1-4 obrokov sadja in zelenjave`- meritev procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan (število)   
-  - `dnevni kadilci`- meritev : procent dnevnih kadilcev (število)
-  - `tedensko prekomerno pijancevanje`- meritev: procent ljudi, ki tedensko prekomerno pijancujejo (število)
-  - `mesecno prekomerno pijancevanje` - meritev: procent ljudi, ki vsak mesec prekomerno pijancujejo (število)
-  - `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
-  - `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
-  - `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
-
-
+  * `s povisano telesno tezo` - meritev: procent ljudi s povisano telesno težo (število)
+  * `0 obrokov sadja in zelenjave` - meritev: procent ljudi, ki ne zaužijejo nič sadja in zelenjave na dan(število)
+  * `5+ obrokov sadja in zelenjave`- meritev: procent ljudi, ki pojejo 5+ sadja in zelenjave na dan (število)
+  * `1-4 obrokov sadja in zelenjave`- meritev procent ljudi, ki pojejo 1-4 obroke sadja in zelenjave na dan (število)   
+  * `dnevni kadilci`- meritev : procent dnevnih kadilcev (število)
+  * `tedensko prekomerno pijancevanje`- meritev: procent ljudi, ki tedensko prekomerno pijancujejo (število)
+  * `mesecno prekomerno pijancevanje` - meritev: procent ljudi, ki vsak mesec prekomerno pijancujejo (število)
+  * `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
+  * `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
+  * `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
+  * `BDP per capita(US$)`- meritev bruto domačega proizvoda na prebivalca (število)
+  
+  Tabeli se razlikujeta glede na vrsti meritve tako,da je razlika v stolpcih
+  
+  * `države` - spremenljivka: ime države(besedilo)
+  * `izobrazba`- spremenljivka: stopnja izobrazbe(besedilo)
+  * `spol`- meritev: vrsta spola(besedilo)
+  
+```{r tabela_drzav,echo=FALSE, message=FALSE}
+#summary(tabela_drzav[c(1,2,3)])
+kable(head(tabela_drzav[c(1,2,3,4,5)]), align="c")
+kable(head(tabela_izobrazbe_spol[c(1,2,3,4,5,6)]),align="c")
+```
 
 ***
 
@@ -78,41 +78,51 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 
 Graf 6 držav- 3 z najvišjim BDP(Luxemburg,Norveška in Danska) in 3 z najnižjim (Bolgarija, Romanija, Turčija)
-legenda mi še ne dela,a vsaka točka ima svoj pomen in sicer:
-- `rdeča` - prikazuje procent dnevnih kadilcev
-- `zelena` - ljudi s povišano telesno težo
-- `oranžna` - procent ljudi ki nič časa ne namenijo telesnim aktivnostim
-- `vijolična` - ljudje ki ne zaužijejo nič obrkov sadja in zelenjave
-- `modra` - procent ludi ki mesečno prekomerno pijančuje
+Vsaka točka ima svoj pomen in sicer:
+
+ - `rdeča` - prikazuje procent dnevnih kadilcev
+ - `zelena` - ljudi s povišano telesno težo
+ - `oranžna` - procent ljudi ki nič časa ne namenijo telesnim aktivnostim
+ - `vijolična` - ljudje ki ne zaužijejo nič obrkov sadja in zelenjave
+ - `modra` - procent ludi ki mesečno prekomerno pijančuje
 
 ```{r graf_drzav_BDP, echo=FALSE, message=FALSE, warning=FALSE}
 graf_drzav_BDP
 ```
 
-Naslednji grafi prikazujejo kako izobrazba in spol vplivata na različne dejavnike.
-Delež ljudi z najvišjo izobrazbo je izrazito manjši od ostalih.
-```{r g_kajenja, echo=FALSE, message=FALSE, warning=FALSE}
-g_kajenja
-```
-Vidimo,da za ženske povišana telesna teža z izobrazbo pada, medtem ko pa za moške ne reavno drži.
-```{r g_debelosti, echo=FALSE, message=FALSE, warning=FALSE}
-g_debelosti
+V grafu opazimo, da je stopnja dnevnih kadilcev za države z nižjim BDP približno enkrat višja od razvitejših držav. 
+Delež ljudi s povišano telesno težo se giblje okrog 50 %, vendar za države z višjim BDP velja da je delež pod 50 %, za države z nižjim BDP pa nad 50%. 
+Največja razlika se pokaže v namenjanju časa športnim aktivnostim.  Procent ljudi, ki se ne ukvarjajo s športom  v razvitejših  državah je krepko pod 50% v manj razvitih pa krepko nad 50 %.
+Glede pijančevanja in zauživanja sadja in zelenjave pa ni vidnih povezav z BDP na prebivalca.
+Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obstaja torej korelacija med BDP in ostalimi meritvami.
+
+
+```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
+
+corrplot(corr, method = "number", title = "Korelacija med BDP per capita in drugimi meritvami")
 ```
 
-V grafu je vidno, da bolj kot so ljudje izobraženi, več časa namenijo športnim aktivnostim.
-```{r g_niso_aktivni, echo=FALSE, message=FALSE, warning=FALSE}
+
+Naslednji grafi prikazujejo kako izobrazba in spol vplivata na različne dejavnike.
+
+```{r g_kajenja_debelosti, out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
+g_kajenja
+g_debelosti
+```
+Opazimo, da delež dnevnih kadilcev pri terciarni stopnji izobrazbi upade.
+Medtem ko za ženske velja, da z višjo stopnjo izobrazbe pada procent žensk s povišano telesno težo, za moške pa to ne ravno drži.
+
+```{r g_pijancevanja_sz, out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
+g_pijancevanje
+g_nic_sz
+```
+Kar se tiče pitja alkohola ni vidnih povezav, sklepam, da je to zaradi drugih pomembnejših dejavnikov.
+
+```{r g_niso_aktivni,out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
 g_niso_aktivni
 ```
 
-```{r g_nic_sz, echo=FALSE, message=FALSE, warning=FALSE}
-g_nic_sz
-```
-
-V spodnejm grafu sem ugotovila, da pijančevanje je značilnejše za ljudi z višjo izobrazbo, na kar lahko vpliva tudi stres iz služb.
-```{r g_pijancevanje, echo=FALSE, message=FALSE, warning=FALSE}
-g_pijancevanje
-```
-
+Najbolj je vidna povezanost med stopnjo izobrazbo in neaktivnim prebivalstvom.  Za ljudi s primarno stopnjo izobrazbo je delež neaktivnega prebivalstva kar 61,8 %in se zmanjša na 34%  za prebivalstvo z najvišjo stopnjo izobrazbe.
 
   ```{r shiny, echo=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=900))

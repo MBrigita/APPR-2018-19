@@ -22,18 +22,25 @@ Evropa <- ggplot() + geom_polygon(data=zemljevid, aes(x=long, y=lat, group=group
 
 #Narišemo grafe
 
-#graf 6 držav- 3 z najvišjim BDP(Luxemburg,Norveška in Dansa) in 3 z najnižjim (Bolgarija, Romanija, Turčija)
-drzave_BDP <- c("Bulgaria","Romania","Turkey","Luxembourg"," Norway", "Denmark", "Sweden")
+#graf 6 držav- 3 z najvišjim BDP(Luxemburg,Norveška in Danska) in 3 z najnižjim (Bolgarija, Romanija, Turčija)
+drzave_BDP <- c("Bulgaria","Romania","Turkey","Luxembourg","Norway", "Denmark")
 graf_drzav_BDP <- ggplot(data= tabela_drzav %>% filter(drzave %in% drzave_BDP),aes(x=drzave, y = seq(from = 0, to = 100, by = 10))) + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP),aes(x=drzave,y= dnevni_kadilci),color="red", show.legend = TRUE) + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= s_povisano_telesno_tezo),color="green", show.legend = TRUE)+
-  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= mesecno_prekomerno_pijancevanje),color="blue",show.legend = TRUE) +
-  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= niso_telesno_aktivni),color="orange",show.legend = TRUE) + 
-  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= nic_obrokov_sadja_in_zelenjave),color="purple",show.legend = TRUE) 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP),aes(x=drzave,y= dnevni_kadilci),color="red", size=7,shape="*") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= s_povisano_telesno_tezo),color="green", size=7,shape="*")+
+  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= mesecno_prekomerno_pijancevanje),color="blue",size=7,shape="*") +
+  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= niso_telesno_aktivni),color="orange",size=7,shape="*") + 
+  geom_point(data= tabela_drzav %>% filter(drzave %in% drzave_BDP), aes(x =drzave, y= nic_obrokov_sadja_in_zelenjave),color="purple",size=7,shape="*") 
 #print(graf_drzav_BDP)
 graf_drzav_BDP <- graf_drzav_BDP+ theme(legend.position = "right") +
   scale_fill_continuous(guide = "colourbar") +
-  scale_size(guide = "legend")
+  scale_size(guide = "legend") + ylab("delez prebivalstva v procentih")
+
+#pogledamo ali je mogoče kakšna korelacija med BDP per capita in drugimi meritvami, pri tem vzamemo proč vrstice, ki nimajo podatkov
+corr <- cor((tabela_drzav[c(3,4,6,9,10)])[c(-2,-11,-20),])
+#corrplot(podatki, method = "number")
+
+#khm <- cor(tabela_izobrazbe_spol[c(-1,-2,-5,-7,-8,-11,-12)],)
+#corrplot(khm, method = "number", title = "Korelacijamed  meritvami")
 
 # graf glede na stopnnjo izobrazbe
 graf_izobrazba <- ggplot(data= tabela_izobrazbe_spol %>% filter(spol == 'Total'),aes(x=izobrazba, y = seq(from = 0, to = 100, by = 10))) + 
@@ -47,15 +54,6 @@ graf_izobrazba <- graf_izobrazba+ theme(legend.position = "right") +
   scale_size(guide = "legend")
 
 #print(graf_izobrazba)
-
-#graf glede na spol
-graf_spol <- ggplot(data= tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'),aes(x= spol, y = seq(from = 0, to = 100, by = 10))) + 
-  geom_point(data=tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'),aes(x= spol,y= dnevni_kadilci),color="red", show.legend = TRUE) + 
-  geom_point(data= tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'), aes(x =spol, y= s_povisano_telesno_tezo),color="green", show.legend = TRUE)+
-  geom_point(data= tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'), aes(x =spol, y= mesecno_prekomerno_pijancevanje),color="blue",show.legend = TRUE) +
-  geom_point(data= tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'), aes(x =spol, y= niso_telesno_aktivni),color="orange",show.legend = TRUE) + 
-  geom_point(data= tabela_izobrazbe_spol %>% filter(izobrazba == 'All ISCED 2011 levels'), aes(x =spol, y= nic_obrokov_sadja_in_zelenjave),color="purple",show.legend = TRUE) 
-#print(graf_spol)
 
 
 #graf ki prikazuje kako izobrazba in spol vplivata na kajenje
@@ -127,29 +125,44 @@ g_pijancevanje<- g_pijancevanje + geom_bar(stat="identity", position=position_do
 #zemljevid dnevnih kadilcev
 zemljevid_dk <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
                                  aes(x=long, y=lat, group=group, fill=dnevni_kadilci)) +
-  ggtitle("zemlejvid dnevnih kadilcev") +  scale_fill_continuous(
-    low= "yellow", high="red", name = "procent dnevnih kadilcev")
+  ggtitle("zemljevid dnevnih kadilcev") +  scale_fill_continuous(
+    low= "yellow", high="red", name = "procent dnevnih kadilcev") + 
+  geom_point(aes(x=6, y=50)) + geom_text(aes(x=6, y=50), label = "Luxembourg") +
+  geom_point(aes(x=23, y=42)) + geom_text(aes(x=23, y=42), label = "Sofia") + 
+  geom_point(aes(x=14.4, y=46)) + geom_text(aes(x=14, y=45), label = "Ljubljana")
 
 #zemljevid ljudi s povišano telesno težo
 zemljevid_ptt <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
                                          aes(x=long, y=lat, group=group, fill=s_povisano_telesno_tezo)) +
   ggtitle("zemljevid ljudi s povišano telesno težo") +  scale_fill_continuous(
-    low= "Green", high="black", name = "procent ljudi")
+    low= "Green", high="black", name = "procent ljudi") + 
+  geom_point(aes(x=6, y=50)) + geom_text(aes(x=6, y=50), label = "Luxembourg") +
+  geom_point(aes(x=23, y=42)) + geom_text(aes(x=23, y=42), label = "Sofia") +
+  geom_point(aes(x=14.4, y=46)) + geom_text(aes(x=14, y=45), label = "Ljubljana")
 
 
-#zemlejvid ljudi ki niso telesne aktivnosti
+#zemljevid ljudi ki niso telesne aktivnosti
 zemljevid_ta <-ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
                                        aes(x=long, y=lat, group=group, fill=niso_telesno_aktivni)) +
-  ggtitle("zemlejvid deleža prebivalstva, ki niso telesno aktivni") + scale_fill_continuous(
-    low= "white", high="orange", name = "procent ljudi")
+  ggtitle("zemljevid deleža prebivalstva, ki niso telesno aktivni") + scale_fill_continuous(
+    low= "white", high="orange", name = "procent ljudi") +
+  geom_point(aes(x=6, y=50)) + geom_text(aes(x=6, y=50), label = "Luxembourg") +
+  geom_point(aes(x=23, y=42)) + geom_text(aes(x=23, y=42), label = "Sofia") + 
+  geom_point(aes(x=14.4, y=46)) + geom_text(aes(x=14, y=45), label = "Ljubljana")
 
 #zemljevid ljudi ki ne zaužjejo nič sadja in zelenjave
 zemljevid_nsz <-ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
                                        aes(x=long, y=lat, group=group, fill=nic_obrokov_sadja_in_zelenjave)) +
-  ggtitle("zemlejvid deleža prebivalstva, ki ne je sadja in zelenjave") + scale_fill_continuous(
-    low= "pink", high="purple", name = "procent ljudi")
+  ggtitle("zemljevid deleža prebivalstva, ki ne je sadja in zelenjave") + scale_fill_continuous(
+    low= "pink", high="purple", name = "procent ljudi") + geom_point(aes(x=6, y=50)) + geom_text(aes(x=6, y=50), label = "Luxembourg") +
+  geom_point(aes(x=23, y=42)) + geom_text(aes(x=23, y=42), label = "Sofia") + 
+  geom_point(aes(x=14.4, y=46)) + geom_text(aes(x=14, y=45), label = "Ljubljana")
 
 #zemljevid ki prikazuje mesečno prekomerno pijančevanje
 zemljevid_pp <- ggplot() + geom_polygon(data=left_join(zemljevid, tabela_drzav, by=c("NAME"="drzave")),
                                         aes(x=long, y=lat, group=group, fill=mesecno_prekomerno_pijancevanje)) +
-  ggtitle("zemlejvid prekomernega mesečnega pijančevanja")
+  ggtitle("zemljevid prekomernega mesečnega pijančevanja")  + geom_point(aes(x=14.4, y=46)) + geom_text(aes(x=14, y=45), label = "Ljubljana") + 
+  geom_point(aes(x=6, y=50)) + geom_text(aes(x=6, y=50), label = "Luxembourg") +
+  geom_point(aes(x=23, y=42)) + geom_text(aes(x=23, y=42), label = "Sofia") 
+
+                                          

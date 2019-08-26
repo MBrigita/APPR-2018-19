@@ -40,6 +40,7 @@ brisanje <- function(tabela){
     tabela$GEO <- NULL
     tabela$SEX <- sub("Males", "moski",tabela$SEX)
     tabela$SEX <- sub("Females", "zenske",tabela$SEX)
+    tabela$SEX <-sub("Total", "skupaj", tabela$SEX)
   }
   return(tabela)
 }
@@ -156,6 +157,6 @@ tabela_izobrazbe_spol$izobrazba[7:9] <- c("sekundarna","sekundarna","sekundarna"
 tabela_izobrazbe_spol$izobrazba[10:12] <- c("terciarna","terciarna","terciarna")
 
 #izbrisemo nepotrebne elemente
-# remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
-#        tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
-#        tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
+remove(tabela_aktivnosti, tabela_aktivnosti_si, tabela_BDP,tabela_debelosti, tabela_debelosti_si,
+       tabela_hrane, tabela_hrane_si, tabela_kajenja, tabela_kajenja_si, tabela_pijancevanja,
+       tabela_pijancevanja_si, i, pomozna_t1, pomozna_t2, tabela)
