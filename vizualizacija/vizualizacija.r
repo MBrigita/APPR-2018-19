@@ -36,7 +36,7 @@ graf_drzav_BDP <- graf_drzav_BDP+ theme(legend.position = "right") +
   scale_size(guide = "legend") + ylab("delez prebivalstva v procentih")
 
 #pogledamo ali je mogoče kakšna korelacija med BDP per capita in drugimi meritvami, pri tem vzamemo proč vrstice, ki nimajo podatkov
-corr <- cor((tabela_drzav[c(3,4,6,9,10)])[c(-2,-11,-20),])
+corr <- cor((tabela_drzav[c(3,2,4,6,9,10)])[c(-2,-11,-20),])
 #corrplot(podatki, method = "number")
 
 #khm <- cor(tabela_izobrazbe_spol[c(-1,-2,-5,-7,-8,-11,-12)],)
@@ -66,7 +66,7 @@ g_kajenja<- g_kajenja +geom_bar(stat="identity", position=position_dodge())+
                             "primarna",
                             "sekundarna", 
                             "terciarna")) +
-  theme_minimal()
+  theme_minimal() + labs(title =" Graf dnevnih kadilcev", x = "izobrazba", y = "delež prebivalstva[%]") 
 #print(g_kajenja)
 # graf ki prikazuje kako izobrazna in spol vplivata na povišano telesno težo
 g_debelosti <- ggplot(data=tabela_izobrazbe_spol, aes(x=izobrazba, y=s_povisano_telesno_tezo, fill=spol)) 
@@ -78,7 +78,7 @@ g_debelosti<- g_debelosti +geom_bar(stat="identity", position=position_dodge())+
                             "primarna",
                             "sekundarna", 
                             "terciarna")) +
-  theme_minimal()
+  theme_minimal() + labs(title =" Graf povišane telesne teže", x = "izobrazba", y = "delež prebivalstva[%]") 
 #print(g_debelosti)
 
 #graf, ki prikazuje kako izobrazba in spol vplivata na telesno aktivnost
@@ -91,7 +91,7 @@ g_niso_aktivni<- g_niso_aktivni +geom_bar(stat="identity", position=position_dod
                             "primarna",
                             "sekundarna", 
                             "terciarna")) +
-  theme_minimal()
+  theme_minimal() + labs(title =" Graf stopnje ljudi, ki niso telesno aktivni", x = "izobrazba", y = "delež prebivalstva[%]") 
 
 
 #graf, ki prikazuje kako izobrazba in spol vplivata na uživanje sadja in zelenjave
@@ -105,7 +105,7 @@ g_nic_sz<- g_nic_sz + geom_bar(stat="identity", position=position_dodge())+
                             "primarna",
                             "sekundarna", 
                             "terciarna")) +
-  theme_minimal()
+  theme_minimal() +labs(title =" Graf uživanja nič obrokov sadja in zelenjave", x = "izobrazba", y = "delež prebivalstva[%]") 
 #print(g_nic_sz)
 #graf, ki prikazuje kako izobrazba in spol vplivata na mesečno pijančevanje
 g_pijancevanje <- ggplot(data=tabela_izobrazbe_spol, aes(x=izobrazba, y=mesecno_prekomerno_pijancevanje, fill=spol))
@@ -118,7 +118,7 @@ g_pijancevanje<- g_pijancevanje + geom_bar(stat="identity", position=position_do
                             "primarna",
                             "sekundarna", 
                             "terciarna"))+
-  theme_minimal() 
+  theme_minimal() + labs(title ="Graf mesečnega prekomernega pijančevanja", x = "izobrazba", y = "delež prebivalstva[%]") 
 #print(g_pijancevanje)
  #spodaj so že zemljevidi glede na države za posamezno kategorijo
 

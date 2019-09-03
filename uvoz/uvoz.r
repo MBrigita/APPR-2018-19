@@ -103,7 +103,7 @@ for(tabela in list(tabela_hrane,tabela_hrane_si)){
   i = i+1
   tabela<- split(tabela, tabela$N_PORTION)
   names(tabela[[3]])[8] <- " ena-stiri_obrokov_sadja_in_zelenjave"
-  names(tabela[[2]])[8] <- "pet+_obrkov_sadja_in_zelenjave"
+  names(tabela[[2]])[8] <- "pet+_obrokov_sadja_in_zelenjave"
   names(tabela[[1]])[8] <- "nic_obrokov_sadja_in_zelenjave"
   tabela[[1]]$N_PORTION <- NULL
   tabela[[2]]$N_PORTION <- NULL

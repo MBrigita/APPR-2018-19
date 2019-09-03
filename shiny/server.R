@@ -12,8 +12,6 @@ shinyServer(function(input, output) {
     print(zemljevid_nsz)}
   else if (input$type == "delež ljudi, ki mesečno prekomerno pijančuje"){
     print(zemljevid_pp)}
-  else if(input$type == "graf za izbrane države"){
-    print(graf_drzav_BDP)}
   })
 
   # output$graf_sprem <- renderPlot({
@@ -65,11 +63,12 @@ shinyServer(function(input, output) {
     
     output$gizbrana_drzava <- renderPlot({
       gizbrana_drzava <- ggplot(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava),aes(x=kategorije, y = seq(from = 0, to = 100, by = 10))) + 
-        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="s_povisano_telesno_tezo", y= s_povisano_telesno_tezo),color="green", size=3,shape=19)+
-        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="dnevni_kadilci", y= dnevni_kadilci),color="red", size=3,shape=19) +
-        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="mesecno_prekomerno_pijancevanje", y= mesecno_prekomerno_pijancevanje),color="blue",size=3,shape=19) +
-        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="niso_telesno_aktivni", y= niso_telesno_aktivni),color="orange",size=3,shape=19) + 
-        geom_point(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="nic_obrokov_sadja_in_zelenjave", y= nic_obrokov_sadja_in_zelenjave),color="purple",size=3,shape=19)
+        geom_bar(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="s_povisano_telesno_tezo", y= s_povisano_telesno_tezo,fill="green"),stat="identity")+
+        geom_bar(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="dnevni_kadilci", y= dnevni_kadilci,fill="red"),stat="identity") +
+        geom_bar(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="mesecno_prekomerno_pijancevanje", y= mesecno_prekomerno_pijancevanje,fill="blue"),stat="identity") +
+        geom_bar(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="niso_telesno_aktivni", y= niso_telesno_aktivni,fill="orange"),stat="identity") + 
+        geom_bar(data= tabela_drzav %>% filter(drzave == input$izbrana_drzava), aes(x ="nic_obrokov_sadja_in_zelenjave", y= nic_obrokov_sadja_in_zelenjave,fill="purple"),stat="identity") + 
+        ylab("delez prebivalstva v procentih")  + theme_minimal() + theme(legend.position="none")
       
       print(gizbrana_drzava)
     })

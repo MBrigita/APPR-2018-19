@@ -10,7 +10,7 @@ fluidPage(
                selectInput("type",label="Kategorija",
                            choice=c("Dnevni kadilci", "število ljudi s povišano telesno težo", "delež ljudi, ki niso telesno aktivni",
                                     "procent prebivalstva, ki ne je sadja in zelenjave", 
-                                    "delež ljudi, ki mesečno prekomerno pijančuje","graf za izbrane države")
+                                    "delež ljudi, ki mesečno prekomerno pijančuje")
                            )
                ),
              

@@ -1,5 +1,5 @@
 ---
-title: "Analiza zdarvega načina življenja ljudi v Evropi"
+title: "Projekt pri predmetu Analiza podatkov s programom R"
 author: "Brigita Milanič"
 output:
   html_document: default
@@ -10,6 +10,21 @@ output:
   runtime: shiny
 
 ---
+<style type="text/css">
+h1.title {
+  font-size: 27px;
+  color: Grey;
+}
+h4.author{
+  color:Grey;
+  margin-bottom: 40px;
+}
+h1.naslov{
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+</style>
 
 ```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 # Če želimo nastaviti pisave v PDF-ju, odkomentiramo
@@ -24,12 +39,16 @@ source("lib/libraries.r", encoding="UTF-8")
 # Izris povezave do RStudia na Binderju
 source("lib/rstudio.r", encoding="UTF-8")
 ```
-
 ![](slike/Rstudio.png)
+<center> <h1 class="naslov">ANALIZA NEZDRAVEGA ŽIVLJENSKEGA SLOGA</h1> </center>
 
+<center class="slika">
+
+![](slike/unhealthy.jpg){width=400px}
+</center>
 # Izbira teme
 
-V projektu bom analizirala zdravje ljudi po posameznih državah v Evropi. Osredotočila se bom povišano telesno težo, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave. Analizirala bom podatke glede na države, spol in izobrazbo.
+V projektu bom analizirala ne zdravi način življenja ljudi po posameznih državah v Evropi. Zanimalo me bo tudi ali ima na nezdravi življenski slog kakšen vpiv izobrazba in spol. Osredotočila se bom na naslednje determinante zdravja: povišano telesno težo, pitje alkohola, kajenje, telesno aktivnost in dnevno zauživanje sadja ali zelenjave.
 
 
 ***
@@ -41,7 +60,7 @@ source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 Uvozila sem podatke glede na države, izobrazbo in spol v obliki CSV s Eurostata. Podatke imam v dveh razpredelnicah v obliki *tidy data*.
-V prvi tabeli so predstavljeni podatki glede na države v drugi tabeli pa glede na izobrazbo in spol. Obe tabeli imata enake stolpce in sicer:
+V prvi tabeli so predstavljeni podatki glede na države v drugi tabeli pa glede na izobrazbo in spol. Obe tabeli imata naslednje stolpce enkein sicer:
 
 **tabela** - podatki v tabelah so
 
@@ -55,17 +74,20 @@ V prvi tabeli so predstavljeni podatki glede na države v drugi tabeli pa glede 
   * `vec kot 150 min telesno aktivni` - meritev: procent ljudi,ki namenijo več kot 150 min na teden športu (število)
   * `do 150min telesno aktivni` - meritev: procent ludi, ki so do 150min telesno aktivni na teden (število)
   * `niso telesno aktivni`- meritev: procent ljudi, tedensko ne namenijo nič časa športnim aktivnostim (število)
-  * `BDP per capita(US$)`- meritev bruto domačega proizvoda na prebivalca (število)
   
-  Tabeli se razlikujeta glede na vrsti meritve tako,da je razlika v stolpcih
+  Tabeli se razlikujeta glede na vrsti meritve tako,da je razlika v dveh stolpcih in sicer v tabeli s državami sta poleg naštetih tudi:
   
   * `države` - spremenljivka: ime države(besedilo)
+  * `BDP per capita(US$)`- meritev bruto domačega proizvoda na prebivalca (število)
+  
+  V drugi tabeli, kjer so meritve glede na izobrazbo in spol pa:
+  
   * `izobrazba`- spremenljivka: stopnja izobrazbe(besedilo)
   * `spol`- meritev: vrsta spola(besedilo)
   
 ```{r tabela_drzav,echo=FALSE, message=FALSE}
 #summary(tabela_drzav[c(1,2,3)])
-kable(head(tabela_drzav[c(1,2,3,4,5)]), align="c")
+kable(head(tabela_drzav[c(1,2,3,4,5)]))
 kable(head(tabela_izobrazbe_spol[c(1,2,3,4,5,6)]),align="c")
 ```
 
@@ -98,25 +120,27 @@ Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obsta
 
 
 ```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
+corrplot(corr, method = "number", title = "Korelacija med meritvami",mar = c(0,5,1,3))
 
-corrplot(corr, method = "number", title = "Korelacija med BDP per capita in drugimi meritvami")
 ```
 
+Izkaže se, da ima BDP na prebivalca največji vpliv na delež dnevnih kadilcov, takoj za tem pa na povečanje telesnih aktivnosti. Veliko obratno soodvisnost ima tudi na procent prebivalstva s povišano telesno težo. Najbolj pa me preseneča podatek korelacije z uživanjem alkohola, vendar mislim, da razlog bolj povezan s podnebjem in verami držav. Opazimo pa tudi veliko povezavo med deležem prebivalca, ki niso aktivni ter kadilci.
 
 Naslednji grafi prikazujejo kako izobrazba in spol vplivata na različne dejavnike.
 
 ```{r g_kajenja_debelosti, out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
-g_kajenja
 g_debelosti
+g_pijancevanje
 ```
-Opazimo, da delež dnevnih kadilcev pri terciarni stopnji izobrazbi upade.
 Medtem ko za ženske velja, da z višjo stopnjo izobrazbe pada procent žensk s povišano telesno težo, za moške pa to ne ravno drži.
+Kar se tiče pitja alkohola ni vidnih povezav, sklepam, da je to zaradi drugih pomembnejših dejavnikov.
 
 ```{r g_pijancevanja_sz, out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
-g_pijancevanje
+
 g_nic_sz
+g_kajenja
 ```
-Kar se tiče pitja alkohola ni vidnih povezav, sklepam, da je to zaradi drugih pomembnejših dejavnikov.
+V obeh grafih je za prebivalce s sekundarno stopnjo izobrazbe delež največji. Torej ne drži, da z višanjem izobrazbe se delež dnevnih kadilcev oz. vnos sadja in zelenjave znižuje. Opazimo pa, da je delež za ljudi s terciarno stopnjo izobrazbe najmanjši.
 
 ```{r g_niso_aktivni,out.width = "50%", echo=FALSE, message=FALSE, warning=FALSE}
 g_niso_aktivni
@@ -126,3 +150,8 @@ Najbolj je vidna povezanost med stopnjo izobrazbo in neaktivnim prebivalstvom.  
 
   ```{r shiny, echo=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=900))
+```
+
+# Zaključek
+
+
