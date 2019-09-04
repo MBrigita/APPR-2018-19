@@ -60,7 +60,7 @@ source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 Uvozila sem podatke glede na države, izobrazbo in spol v obliki CSV s Eurostata. Podatke imam v dveh razpredelnicah v obliki *tidy data*.
-V prvi tabeli so predstavljeni podatki glede na države v drugi tabeli pa glede na izobrazbo in spol. Obe tabeli imata naslednje stolpce enake in sicer:
+V prvi tabeli so predstavljeni podatki glede na države, v drugi tabeli pa glede na izobrazbo in spol. Obe tabeli imata naslednje stolpce enake in sicer:
 
 **tabela** - podatki v tabelah so
 
@@ -113,8 +113,8 @@ graf_drzav_BDP
 ```
 
 V grafu opazimo, da je stopnja dnevnih kadilcev za države z nižjim BDP približno enkrat višja od razvitejših držav. 
-Delež ljudi s povišano telesno težo se giblje okrog 50 %, vendar za države z višjim BDP velja da je delež pod 50 %, za države z nižjim BDP pa nad 50%. 
-Največja razlika se pokaže v namenjanju časa športnim aktivnostim.  Procent ljudi, ki se ne ukvarjajo s športom  v razvitejših  državah je krepko pod 50% v manj razvitih pa krepko nad 50 %.
+Delež ljudi s povišano telesno težo se giblje okrog 50 %, vendar za države z višjim BDP velja, da je delež pod 50 %, za države z nižjim BDP pa nad 50%. 
+Največja razlika se pokaže v namenjanju časa športnim aktivnostim.  Procent ljudi, ki se ne ukvarjajo s športom  v razvitejših  državah je krepko pod 50%, v manj razvitih pa krepko nad 50 %.
 Glede pijančevanja in zauživanja sadja in zelenjave pa ni vidnih povezav z BDP na prebivalca.
 Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obstaja torej korelacija med BDP in ostalimi meritvami.
 
