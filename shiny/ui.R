@@ -2,7 +2,7 @@ library(shiny)
 
 fluidPage(
   
-  titlePanel("zdravje ljudi v Evropi"),
+  titlePanel("Analiza glede na države"),
   
   tabsetPanel(
     tabPanel("Zemljevid",
