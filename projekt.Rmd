@@ -119,8 +119,8 @@ Glede pijančevanja in zauživanja sadja in zelenjave pa ni vidnih povezav z BDP
 Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obstaja torej korelacija med BDP in ostalimi meritvami.
 
 
-```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
-corrplot(corr, method = "number", title = "Korelacija med meritvami",,mar = c(0,0,1,0))
+```{r corr, echo=FALSE,  message=FALSE, warning=FALSE}
+corrplot(corr, method = "number", title = "Korelacija med meritvami",type = "upper",tl.cex = 0.8,mar=c(0,0,1,0))
 
 ```
 
