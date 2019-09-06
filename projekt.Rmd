@@ -34,12 +34,12 @@ h1.naslov{
 # Uvoz vseh potrebnih knjižnic
 source("lib/libraries.r", encoding="UTF-8")
 ```
-Sys.setlocale("LC_ALL","Slovenian")
+
 ```{r rstudio, echo=FALSE, results='asis'}
 # Izris povezave do RStudia na Binderju
 source("lib/rstudio.r", encoding="UTF-8")
 ```
-![](slike/Rstudio.png)
+
 <center> <h1 class="naslov">ANALIZA NEZDRAVEGA ŽIVLJENSKEGA SLOGA</h1> </center>
 
 <center class="slika">
@@ -120,7 +120,7 @@ Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obsta
 
 
 ```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
-corrplot(corr, method = "number", title = "Korelacija med meritvami",mar = c(0,5,1,3))
+corrplot(corr, method = "number", title = "Korelacija med meritvami",mar = c(0,0,1,0))
 
 ```
 
@@ -148,9 +148,10 @@ g_niso_aktivni
 
 Najbolj je vidna povezanost med stopnjo izobrazbo in neaktivnim prebivalstvom.  Za ljudi s primarno stopnjo izobrazbo je delež neaktivnega prebivalstva kar 61,8 %in se zmanjša na 34%  za prebivalstvo z najvišjo stopnjo izobrazbe.
 
-  ```{r shiny, echo=FALSE}
+```{r shiny, echo=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height= 700))
 ```
+
 # Zaključek
 
 V analizi sem ugotovila, da razvitost države ima največji vpliv na delež dnevnih kadilcev, ki z razvitostjo pada.  Prav tako velja, da z višanjem stopnje izobrazbe in razvitosti države je  manj ljudi telesno neaktivnih in s povišano telesno težo. Vpliv na ostale determinante zdravja iz analize niso vidne. 
