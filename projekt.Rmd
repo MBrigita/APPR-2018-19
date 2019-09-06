@@ -120,7 +120,7 @@ Natančnejšo analizo sem naredila z naslednjim grafom. Zanimalo me je ali obsta
 
 
 ```{r corr, echo=FALSE, message=FALSE, warning=FALSE}
-corrplot(corr, method = "number", title = "Korelacija med meritvami",mar = c(0,0,1,0))
+corrplot(corr, method = "number", title = "Korelacija med meritvami")
 
 ```
 
